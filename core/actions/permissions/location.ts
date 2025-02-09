@@ -14,7 +14,16 @@ export const requestLocationPermission =
   };
 
 export const checkLocationPermission = async () => {
-    const {} = await Location.getForegroundPermissionsAsync()
+  const { status } = await Location.getForegroundPermissionsAsync();
+
+  switch (status) {
+    case "granted":
+      return PermissionStatus.GRANTED;
+    case "denied":
+      return PermissionStatus.DENIED;
+    default:
+      return PermissionStatus.UNDETERMINED;
+  }
 };
 
 const manualPermissionRequest = async () => {
